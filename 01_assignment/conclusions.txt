@@ -1,0 +1,4 @@
+1.  Creo que no hace falta hacer gray world, asi que lo podemos sacar
+2. Se necesita determinar qué white balancing funciona mejor, me da la sensación de que funciona mejor el manual que el white world (aunque por el momento está de esta forma)
+3. Hay que justificar por qué RGGB y no BGGR
+4. Por le momento he sacado captura a los tipos de denoising, pero a lo mejor conviene generar la imagen con esa sección de pixeles (pero me está crasheando matlab)
