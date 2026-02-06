@@ -1,24 +1,10 @@
-function outK = zPSFPad(inK, height, width)
-    % This function is to zeropadding the psf
-    
-	[sheight, swidth] = size(inK);
-
-	outK = zeros(height, width);
-	
-    outK(floor(end/2-sheight/2) + 1:floor(end/2-sheight/2) + sheight, ...
-         floor(end/2-swidth/2) + 1:floor(end/2-swidth/2) + swidth) = inK;
-
-end
-
 % Read data
-aperture = imread('apertures/circular.bmp');
+% aperture = imread('apertures/circular.bmp');
 % aperture = imread('apertures/Levin.bmp');
 % aperture = imread('apertures/raskar.bmp');
-% aperture = imread('apertures/zhou.bmp');
+aperture = imread('apertures/zhou.bmp');
 image = imread('images/penguins.jpg');
-
-% Exercise 5
-% image = image(:, :, 1); %Comment for color image, Uncomment for gray
+image = image(:, :, 1);
 
 % Noise level (Gaussian noise)
 sigma = 0.005;
@@ -51,10 +37,9 @@ k1 = k1 * (flow / max(k1(:)));
 f1 = zDefocused(f0, k1, sigma, 0);
 
 % Recover
-psf = zPSFPad(k1, height, width);
 f0_hat = zDeconvWNR(f1, k1, C); % Wienner with priors
-% f0_hat = deconvlucy(f1, psf); %Lucy
-% f0_hat = deconvwnr(f1, psf); %Wienner without priors
+f0_hatdeconvlucy(f1); %Lucy
+%Wienner without priors
 
 % Display results
 figure;
@@ -70,5 +55,3 @@ title('Defocused');
 subplot_tight(1, 3, 3, 0.0, false)
 imshow(f0_hat);
 title('Recovered');
-
-

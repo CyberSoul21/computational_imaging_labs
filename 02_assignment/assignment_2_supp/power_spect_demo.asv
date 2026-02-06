@@ -1,18 +1,16 @@
 % Read data
 % aperture = imread('apertures/circular.bmp');
-aperture = imread('apertures/Levin.bmp');
+% aperture = imread('apertures/Levin.bmp');
 % aperture = imread('apertures/raskar.bmp');
 % aperture = imread('apertures/zhou.bmp');
 image = imread('images/penguins.jpg');
-image = image(:, :, 1); %Comment for color image, Uncomment for gray
+image = image(:, :, 1);
 
 % Noise level (gaussian noise)
-% sigma = 0.005;
-sigma = 0.05;
+sigma = 0.005;
 
 % Blur size
-% blurSize = 7;
-blurSize = 5;
+blurSize = 7;
 
 
 f0 = im2double(image);
