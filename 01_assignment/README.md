@@ -9,6 +9,7 @@ This project demonstrates a sequence of image processing steps using MATLAB. The
 
 ## File Information
 
+- The folder contains files .mlx, images (results) and the final report as **`CI_Assignment_1.pdf`**.
 - First Download the folder: https://drive.google.com/drive/folders/1Dwoza37cJ_yw2oLVDJAhLAj7Thr-KH0k?usp=sharing
 - The main file to execute is **`lab1.mlx`**, which contains the requirements for Assignment 1.
 - **`lab1_Extra.mlx`** is a complete pipeline with additional image and processing steps.
