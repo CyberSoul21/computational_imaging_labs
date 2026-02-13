@@ -1,8 +1,8 @@
 % Read data
-aperture = imread('apertures/circular.bmp');
+% aperture = imread('apertures/circular.bmp');
 % aperture = imread('apertures/Levin.bmp');
 % aperture = imread('apertures/raskar.bmp');
-% aperture = imread('apertures/zhou.bmp');
+aperture = imread('apertures/zhou.bmp');
 image = imread('images/penguins.jpg');
 image = image(:, :, 1); %Comment for color image, Uncomment for gray
 
@@ -115,8 +115,8 @@ for sigma = sigma_v
     grid('on')
     title('Defocused Y');
 
-    save_name_1 = strcat('results/exercise3/aperture_ps_sigma_',string(sigma),'_blursize_',string(blurSize),'.png');
-    save_name_2 = strcat('results/exercise3/image_ps_sigma_',string(sigma),'_blursize_',string(blurSize),'.png');
+    save_name_1 = strcat('results/exercise4/zhou/spectrum/aperture_ps_sigma_',string(sigma),'_blursize_',string(blurSize),'.png');
+    save_name_2 = strcat('results/exercise4/zhou/spectrum/image_ps_sigma_',string(sigma),'_blursize_',string(blurSize),'.png');
     saveas(fig1,save_name_1)
     saveas(fig2,save_name_2)
 
