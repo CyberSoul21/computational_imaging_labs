@@ -11,17 +11,17 @@ function outK = zPSFPad(inK, height, width)
 end
 
 % Read data
-aperture = imread('apertures/circular.bmp');
+% aperture = imread('apertures/circular.bmp');
 % aperture = imread('apertures/Levin.bmp');
 % aperture = imread('apertures/raskar.bmp');
-% aperture = imread('apertures/zhou.bmp');
+aperture = imread('apertures/zhou.bmp');
 image = imread('images/penguins.jpg');
 
 % Exercise 5
-% image = image(:, :, 1); %Comment for color image, Uncomment for gray
+image = image(:, :, 1); %Comment for color image, Uncomment for gray
 
 % Noise level (Gaussian noise)
-%sigma = 0.005;
+% sigma_v = 0.005;
 sigma_v = [0.0005, 0.005, 0.010, 0.1, 1, 2];
 
 % Blur size
@@ -33,7 +33,6 @@ f0 = im2double(image);
 [height, width, channel] = size(f0);
 
 for sigma = sigma_v
-
     for blurSize = blurSize_v
         % Prior matrix: 1/f law
         A_star = eMakePrior(height, width) + 0.00000001;
@@ -60,7 +59,7 @@ for sigma = sigma_v
         % f0_hat = deconvwnr(f1, psf); %Wienner without priors
         
         % Display results
-        figure;
+        fig = figure;
         
         subplot_tight(1, 3, 1, 0.0, false)
         imshow(f0);
@@ -74,6 +73,9 @@ for sigma = sigma_v
         imshow(f0_hat);
         title_s = strcat('Recovered' , ' Sigma: ' , string(sigma), ' BlurSize: ',string(blurSize));
         title(title_s);
+
+        save_name = strcat('results/exercise4/zhou/sigma_',string(sigma),'_blursize_',string(blurSize),'.png');
+        saveas(fig,save_name)
     end
 end
 
