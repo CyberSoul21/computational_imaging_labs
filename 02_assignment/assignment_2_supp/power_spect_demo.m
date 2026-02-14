@@ -9,7 +9,9 @@ image = image(:, :, 1); %Comment for color image, Uncomment for gray
 % Noise level (gaussian noise)
 % sigma = 0.005;
 % sigma = 0.05;
-sigma_v = [0.0005, 0.005, 0.010, 0.1, 1, 2];
+%sigma_v = [0.0005, 0.005, 0.010, 0.1, 1, 2];
+sigma_v = [0.005];
+%sigma_v = [0.001, 0.01, 0.05];
 
 % Blur size
 % blurSize = 7;
@@ -115,8 +117,11 @@ for sigma = sigma_v
     grid('on')
     title('Defocused Y');
 
-    save_name_1 = strcat('results/exercise4/zhou/spectrum/aperture_ps_sigma_',string(sigma),'_blursize_',string(blurSize),'.png');
-    save_name_2 = strcat('results/exercise4/zhou/spectrum/image_ps_sigma_',string(sigma),'_blursize_',string(blurSize),'.png');
+    %save_name_1 = strcat('results/exercise4/zhou/spectrum/aperture_ps_sigma_',string(sigma),'_blursize_',string(blurSize),'.png');
+    %save_name_2 = strcat('results/exercise4/zhou/spectrum/image_ps_sigma_',string(sigma),'_blursize_',string(blurSize),'.png');
+
+    save_name_1 = strcat('results/exercise2/aperture_ps_sigma_',string(sigma),'_blursize_',string(blurSize),'.png');
+    save_name_2 = strcat('results/exercise2/image_ps_sigma_',string(sigma),'_blursize_',string(blurSize),'.png');    
     saveas(fig1,save_name_1)
     saveas(fig2,save_name_2)
 
