@@ -1,5 +1,6 @@
 % Read stack of images with their exposure
-directory = ('../Data/'); % change dir to run a different stack
+% directory = ('../Data/'); % change dir to run a different stack
+directory = ('../ours/'); % change dir to run a different stack
 
 [file_names, exposures] = parse_files(directory);
 
@@ -18,6 +19,7 @@ no_weights = ones(256);
 
 % lamda smoothing factor (default=50)
 lambda = 50; 
+% lambda = 5; 
 
 % Load and sample the images
 [Z, B] = prepare_matrices_gsolve(file_names, exposures, 20);
