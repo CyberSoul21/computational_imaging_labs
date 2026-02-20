@@ -4,17 +4,19 @@
 % aperture = imread('apertures/raskar.bmp');
 aperture = imread('apertures/zhou.bmp');
 image = imread('images/penguins.jpg');
-image = image(:, :, 1); %Comment for color image, Uncomment for gray
+% image = image(:, :, 1); %Comment for color image, Uncomment for gray
 
 % Noise level (gaussian noise)
 % sigma = 0.005;
 % sigma = 0.05;
-sigma_v = [0.0005, 0.005, 0.010, 0.1, 1, 2];
+sigma_v = 0.01;
+% sigma_v = [0.0005, 0.005, 0.010, 0.1, 1, 2];
 
 % Blur size
-% blurSize = 7;
+blurSize_v = 7;
 % blurSize = 5;
-blurSize_v = [1,7,14];
+
+% blurSize_v = [1,7,14];
 
 
 f0 = im2double(image);
