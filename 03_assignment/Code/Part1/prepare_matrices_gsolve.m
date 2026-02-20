@@ -11,6 +11,7 @@ function [Z,B] = prepare_matrices_gsolve( ...
     n_exposures = size(exposures,1);
     % Gget the number of pixels to sample
     tmp = imread(file_names{1});
+    tmp = imresize(tmp, [502 716]);
     
     n_pixels = (fix(size(tmp,1)/sample_rate)+1) * (fix(size(tmp,2)/sample_rate)+1);
     
@@ -19,6 +20,7 @@ function [Z,B] = prepare_matrices_gsolve( ...
     for k=1:n_exposures
         
         image = imread(file_names{k});
+        image = imresize(image, [502 716]);
         index=1;
     
         for i=1:sample_rate:size(image,1)

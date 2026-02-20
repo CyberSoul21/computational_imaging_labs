@@ -40,7 +40,8 @@ weights = tent_weights;
 % Compute the hdr radiance map (Section 2.2 in Debevec)
 
 % Plot recovered g
-plot_g(g_red, g_green, g_blue, "Results/g_tent_smooth.png");
+% plot_g(g_red, g_green, g_blue, "Results/g_tent_smooth.png");
+plot_g(g_red, g_green, g_blue, "Results/ours_smooth.png");
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Compute and plot radiance map
@@ -52,8 +53,10 @@ figure(2)
 imagesc(radiance_map(:, :, 1))
 axis image;
 
-saveas(gcf, "Results/radiance_map.png")
+% saveas(gcf, "Results/radiance_map.png")
+saveas(gcf, "Results/ours_radiance_map.png")
 
-hdrwrite(exp(radiance_map), 'Results/hdr_image.hdr')
+% hdrwrite(exp(radiance_map), 'Results/hdr_image.hdr')
+hdrwrite(exp(radiance_map), 'Results/ours_hdr_image.hdr')
 
 clear directory t i;
