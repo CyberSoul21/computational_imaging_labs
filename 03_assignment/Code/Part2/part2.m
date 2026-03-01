@@ -3,7 +3,8 @@
 hdr = hdrread('../Part1/Results/ours_hdr_image.hdr');
 
 % tone-map
-keys=[0.02, 0.07, 0.10];
+% keys=[0.02, 0.07, 0.10];
+keys=[0.25];
 burns=[0.1, 0.5, 1];
 
 fignum = 3;
@@ -22,19 +23,19 @@ for key=keys
 
 end
 
-for burn=burns
-
-    % imwrite( ...
-    %     reinhard_tonemapping(hdr, keys(2), burn, fignum+1), ...
-    %     "Results/tonemapped_reinhard_burn_" + burn + ".png" ...
-    %     )
-
-    imwrite( ...
-        reinhard_tonemapping(hdr, keys(2), burn, fignum+1), ...
-        "Results/ours_tonemapped_reinhard_burn_" + burn + ".png" ...
-        )
-
-end
+% for burn=burns
+% 
+%     % imwrite( ...
+%     %     reinhard_tonemapping(hdr, keys(2), burn, fignum+1), ...
+%     %     "Results/tonemapped_reinhard_burn_" + burn + ".png" ...
+%     %     )
+% 
+%     imwrite( ...
+%         reinhard_tonemapping(hdr, keys(2), burn, fignum+1), ...
+%         "Results/ours_tonemapped_reinhard_burn_" + burn + ".png" ...
+%         )
+% 
+% end
 
 simple_hdr = scale_and_gamma(hdr ./ (1 + hdr));
 
