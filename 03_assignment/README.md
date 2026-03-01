@@ -17,11 +17,10 @@
 Each section of the code should be run independently based on which analysis you want to perform. Depending on which part of the code you wish to test, you may need to **comment or uncomment** the relevant lines of code. Each part is divided in 3 parts 
 
 
+### 2. **Testing Different parts**:
+You need enter each folder dempending of the part, at the beginning of the code you can comment or uncomment in order to use either image provided or own images.
 
-### 2. **Testing with Different Parameters**:
-Both scripts are set up to run with **two nested for loops**. These loops allow you to experiment with different combinations of the `sigma` and `blur_size` parameters.
-
-### 2. **Assignment structure**:
+### 3. **Assignment structure**:
 03_assignment/
     ├── Code
         ├── Part1
@@ -40,6 +39,4 @@ Both scripts are set up to run with **two nested for loops**. These loops allow 
         └── ours
         └── ours_Raw
 
-
-### Example:
 
