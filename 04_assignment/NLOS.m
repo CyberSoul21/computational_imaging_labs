@@ -1,5 +1,6 @@
 clear; clc; close all;
-D = load("CI_Lab_NLOS_datasets\Z_d=0.5_l=[1x1]_s=[256x256].mat");
+%D = load("CI_Lab_NLOS_datasets\Z_d=0.5_l=[1x1]_s=[256x256].mat");
+D = load("/home/javier/Documents/Computational Imaging/CI_Lab_NLOS_datasets/Z_d=0.5_l=[1x1]_s=[256x256].mat");
 norm_check = 0;
 
 fn = fieldnames(D);
