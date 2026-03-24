@@ -38,8 +38,8 @@ sy_list = 1:stepWall:NyWall;
 fprintf('Using %d x %d wall samples\n', length(sx_list), length(sy_list));
 
 %% Small reconstruction grid
-Nx = 16;
-Ny = 16;
+Nx = 32;%16;
+Ny = 32;%16;
 
 x = linspace(volPos(1), volPos(1) + volSize, Nx);
 y = linspace(volPos(2), volPos(2) + volSize, Ny);
@@ -110,3 +110,6 @@ colorbar;
 xlabel('x');
 ylabel('y');
 title('2D backprojection reconstruction');
+
+
+
