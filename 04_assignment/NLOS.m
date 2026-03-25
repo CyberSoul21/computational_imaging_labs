@@ -1,7 +1,7 @@
 clear; clc; close all;
-%D = load("CI_Lab_NLOS_datasets\Z_d=0.5_l=[1x1]_s=[256x256].mat");
-D = load("/home/javier/Documents/Computational Imaging/CI_Lab_NLOS_datasets/Z_d=0.5_l=[1x1]_s=[256x256].mat");
-norm_check = 0;
+D = load("CI_Lab_NLOS_datasets\Z_d=0.5_l=[1x1]_s=[256x256].mat"); norm_check = 1;
+% D = load("CI_Lab_NLOS_datasets\usaf_d=0.5_l=[1x1]_s=[256x256].mat"); norm_check = 0;
+% D = load("CI_Lab_NLOS_datasets\bunny_d=0.5_l=[1x1]_s=[256x256].mat"); norm_check = 1;
 
 fn = fieldnames(D);
 dataset = D.(fn{1});
@@ -57,7 +57,7 @@ if isscalar(volSize)
 end
 
 % Resolution
-N = 8;
+N = 32;
 
 % Histograma (NO squeeze)
 H = dataset.data;
@@ -118,10 +118,13 @@ end
 disp('end reprojection');
 
 % This accumulates over all depth
-proj = max(G,[],3);
+proj = max(G,[],1); %Collapse over plane Y-Z
+proj = squeeze(proj);
 % proj = log(proj + 1); %Improve visualization
 figure
-imagesc(proj)
+% imagesc(proj)
+imagesc(rot90(proj, -1))
+axis xy
 axis image
 colormap hot
 colorbar
@@ -135,10 +138,13 @@ title('Volumen 3D')
 f_lap = fspecial3('lap');
 G_lap = imfilter(G, -f_lap, 'symmetric');
 G_lap(G_lap < 0) = 0;
-proj_lap = max(G_lap,[],3);
+proj_lap = max(G_lap,[],1);
+proj_lap = squeeze(proj_lap);
 figure
-imagesc(proj_lap)
+% imagesc(proj_lap)
+imagesc(rot90(proj_lap, -1))
 % imagesc(log(proj_lap+1))
+axis xy
 axis image
 colormap hot
 colorbar
@@ -149,10 +155,13 @@ sigma = 1.0;   % try 0.5, 1, 2
 f_log = fspecial3('log', [5 5 5], sigma);
 G_log = imfilter(G, -f_log, 'symmetric');
 G_log(G_log < 0) = 0;
-proj_log = max(G_log,[],3);
+proj_log = max(G_log,[],1);
+proj_log = squeeze(proj_log);
 figure
-imagesc(proj_log)
+% imagesc(proj_log)
+imagesc(rot90(proj_log, -1))
 % imagesc(log(proj_log+1))
+axis xy
 axis image
 colormap hot
 colorbar
