@@ -117,10 +117,11 @@ if max(G(:)) > 0
 end
 
 %% Show XY slice near z = 0.5
+%% Show XY slice near z = 0.5
 zTarget = 0.5;
 [~, iz0] = min(abs(z - zTarget));
 
-figure;
+figure('Name','Backprojection - Raw XY Slice');
 imagesc(x, y, G(:,:,iz0)');
 axis image;
 axis xy;
@@ -128,36 +129,40 @@ colormap hot;
 colorbar;
 xlabel('x');
 ylabel('y');
-title(sprintf('Raw XY slice at z = %.3f m', z(iz0)));
+title(sprintf('Backprojection (raw) - XY slice at z = %.3f m', z(iz0)));
 
 %% Show neighboring slices
 if iz0 > 1 && iz0 < Nz
-    figure;
+    figure('Name','Backprojection - Neighboring XY Slices');
+
     subplot(1,3,1);
     imagesc(x, y, G(:,:,iz0-1)');
     axis image; axis xy; colormap hot; colorbar;
     xlabel('x'); ylabel('y');
-    title(sprintf('z = %.3f', z(iz0-1)));
+    title(sprintf('Backprojection - z = %.3f m', z(iz0-1)));
 
     subplot(1,3,2);
     imagesc(x, y, G(:,:,iz0)');
     axis image; axis xy; colormap hot; colorbar;
     xlabel('x'); ylabel('y');
-    title(sprintf('z = %.3f', z(iz0)));
+    title(sprintf('Backprojection - z = %.3f m', z(iz0)));
 
     subplot(1,3,3);
     imagesc(x, y, G(:,:,iz0+1)');
     axis image; axis xy; colormap hot; colorbar;
     xlabel('x'); ylabel('y');
-    title(sprintf('z = %.3f', z(iz0+1)));
+    title(sprintf('Backprojection - z = %.3f m', z(iz0+1)));
 end
 
-%% Max projections (optional)
-G_xy = squeeze(max(G, [], 3));
-G_xz = squeeze(max(G, [], 2));
-G_yz = squeeze(max(G, [], 1));
+%% 2D projections from the 3D reconstruction
+% As requested in the lab: visualize a front 2D projection by taking the
+% maximum over depth, and optionally over other dimensions.
 
-figure;
+G_xy = squeeze(max(G, [], 3));   % front projection (max over depth z)
+G_xz = squeeze(max(G, [], 2));   % side projection (max over y)
+G_yz = squeeze(max(G, [], 1));   % side projection (max over x)
+
+figure('Name','2D Projection from 3D Reconstruction - XY');
 imagesc(x, y, G_xy');
 axis image;
 axis xy;
@@ -165,9 +170,9 @@ colormap hot;
 colorbar;
 xlabel('x');
 ylabel('y');
-title('Max projection XY');
+title('2D projection from 3D backprojection - XY (max over depth)');
 
-figure;
+figure('Name','2D Projection from 3D Reconstruction - XZ');
 imagesc(x, z, G_xz');
 axis image;
 axis xy;
@@ -175,9 +180,9 @@ colormap hot;
 colorbar;
 xlabel('x');
 ylabel('z');
-title('Max projection XZ');
+title('2D projection from 3D backprojection - XZ (max over y)');
 
-figure;
+figure('Name','2D Projection from 3D Reconstruction - YZ');
 imagesc(y, z, G_yz');
 axis image;
 axis xy;
@@ -185,8 +190,7 @@ colormap hot;
 colorbar;
 xlabel('y');
 ylabel('z');
-title('Max projection YZ');
-
+title('2D projection from 3D backprojection - YZ (max over x)');
 
 %% 3D Laplacian filter
 lap3d = zeros(3,3,3);
@@ -205,7 +209,7 @@ if max(G_lap(:)) > 0
     G_lap = G_lap / max(G_lap(:));
 end
 
-figure;
+figure('Name','Backprojection + Laplacian Filter');
 imagesc(x, y, G_lap(:,:,iz0)');
 axis image;
 axis xy;
@@ -213,11 +217,9 @@ colormap hot;
 colorbar;
 xlabel('x');
 ylabel('y');
-title(sprintf('Laplacian filtered XY slice at z = %.3f m', z(iz0)));
-
+title(sprintf('Backprojection + Laplacian filter - XY slice at z = %.3f m', z(iz0)));
 
 %% 3D LoG filtering (Gaussian + Laplacian)
-
 sigma = 0.8;
 halfSize = 2;
 
@@ -243,7 +245,7 @@ if max(G_log(:)) > 0
     G_log = G_log / max(G_log(:));
 end
 
-figure;
+figure('Name','Backprojection + LoG Filter');
 
 subplot(1,2,1);
 imagesc(x, y, G(:,:,iz0)');
@@ -253,7 +255,7 @@ colormap hot;
 colorbar;
 xlabel('x');
 ylabel('y');
-title(sprintf('Raw slice at z = %.3f m', z(iz0)));
+title(sprintf('Backprojection (raw) - XY slice at z = %.3f m', z(iz0)));
 
 subplot(1,2,2);
 imagesc(x, y, G_log(:,:,iz0)');
@@ -263,10 +265,20 @@ colormap hot;
 colorbar;
 xlabel('x');
 ylabel('y');
-title(sprintf('LoG filtered slice at z = %.3f m', z(iz0)));
+title(sprintf('Backprojection + LoG filter - XY slice at z = %.3f m', z(iz0)));
 
-%3D representation
-title('Volumen 3D')
+%% 3D representation of raw backprojection
+Gshow = G;
+thresholdRaw = 0.25;
+Gshow(Gshow < thresholdRaw) = 0;
 
-%volshow(G)
-volshow(G, 'RenderingStyle', 'VolumeRendering');
+figure('Name','3D Volume - Backprojection');
+volshow(Gshow, 'RenderingStyle', 'VolumeRendering');
+
+%% 3D representation of LoG-filtered backprojection
+Glog_show = G_log;
+thresholdLog = 0.20;
+Glog_show(Glog_show < thresholdLog) = 0;
+
+figure('Name','3D Volume - Backprojection + LoG Filter');
+volshow(Glog_show, 'RenderingStyle', 'VolumeRendering');
