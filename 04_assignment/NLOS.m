@@ -1,38 +1,39 @@
 clear; clc; close all;
-% D = load("CI_Lab_NLOS_datasets\Z_d=0.5_l=[1x1]_s=[256x256].mat"); norm_check = 0; confoc_check = 0;
-% D = load("CI_Lab_NLOS_datasets\usaf_d=0.5_l=[1x1]_s=[256x256].mat"); norm_check = 1; confoc_check = 0;
-% D = load("CI_Lab_NLOS_datasets\bunny_d=0.5_l=[1x1]_s=[256x256].mat"); norm_check = 0; confoc_check = 0;
-D = load("CI_Lab_NLOS_datasets\bunny_d=0.5_c=[256x256].mat"); norm_check = 1; confoc_check = 1;
 
 % Resolution
-N = 32;
+N = 4;
 
+% Dataset selection
+D = load("CI_Lab_NLOS_datasets\Z_d=0.5_l=[1x1]_s=[256x256].mat"); norm_check = 0; confoc_check = 0;
+% D = load("CI_Lab_NLOS_datasets\usaf_d=0.5_l=[1x1]_s=[256x256].mat"); norm_check = 1; confoc_check = 0;
+% D = load("CI_Lab_NLOS_datasets\bunny_d=0.5_l=[1x1]_s=[256x256].mat"); norm_check = 0; confoc_check = 0;
+% D = load("CI_Lab_NLOS_datasets\bunny_d=0.5_c=[256x256].mat"); norm_check = 1; confoc_check = 1;
 fn = fieldnames(D);
 dataset = D.(fn{1});
 
-% % First to-do
-% H = squeeze(dataset.data);
-% [nx,ny,nt] = size(H);
-% 
-% x_mid = round(nx/2);
-% y_mid = round(ny/2);
-% Hx = squeeze(H(:,y_mid,:));
-% Hy = squeeze(H(x_mid,:,:));
-% 
-% figure
-% imagesc(Hx)
-% axis xy
-% colormap hot
-% colorbar
-% title('x-t slice')
-% 
-% figure
-% imagesc(Hy)
-% axis xy
-% colormap hot
-% colorbar
-% title('y-t slice')
-% % End first to-do
+% First to-do
+H_1 = squeeze(dataset.data);
+[nx,ny,nt] = size(H_1);
+
+x_mid = round(nx/2);
+y_mid = round(ny/2);
+Hx = squeeze(H_1(:,y_mid,:));
+Hy = squeeze(H_1(x_mid,:,:));
+
+figure
+imagesc(Hx)
+axis xy
+colormap hot
+colorbar
+title('x-t slice')
+
+figure
+imagesc(Hy)
+axis xy
+colormap hot
+colorbar
+title('y-t slice')
+% End first to-do
 
 
 laserPos = dataset.laserPositions;
@@ -78,6 +79,7 @@ else % Not Normalized
 end
 
 disp('ini reprojection');
+tic;
 for ix = 1:N
     for iy = 1:N
         for iz = 1:N
@@ -112,8 +114,9 @@ for ix = 1:N
     end
 end    
 disp('end reprojection');
+toc;
 
-% This accumulates over all depth
+% Unfiltered
 proj = max(G,[],2); %Collapse over plane X-Z
 proj = squeeze(proj);
 figure
@@ -123,6 +126,7 @@ axis image
 colormap hot
 colorbar
 title('Backprojection reconstruction')
+% saveas(gcf, "Results/back_Z.png")
 
 %3D representation
 volshow(G)
@@ -141,9 +145,10 @@ axis image
 colormap hot
 colorbar
 title('Backprojection + Laplacian')
+% saveas(gcf, "Results/back_Z_lap.png")
 
-%laplacian Gauss reconstruction
-sigma_v = [0.5, 1.0, 2.0];   % try 0.5, 1, 2
+% laplacian Gauss reconstruction
+sigma_v = [0.5, 1.0, 2.0];
 for sigma = sigma_v
     f_log = fspecial3('log', [5 5 5], sigma);
     G_log = imfilter(G, -f_log, 'symmetric');
@@ -157,4 +162,5 @@ for sigma = sigma_v
     colormap hot
     colorbar
     title(['Backprojection + LoG (sigma = ', num2str(sigma), ')'])
+    % saveas(gcf, "Results/back_Z_LoG_"+sigma+".png")
 end
